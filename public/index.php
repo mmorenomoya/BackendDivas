@@ -25,7 +25,7 @@ $router->get('/admin', 'AdminController', 'index');
 $router->get('/admin/users', 'AdminController', 'users');
 
 // Client
-$router->get('/client', 'ClientController', 'inedx');
+$router->get('/client', 'ClientController', 'index');
 
 //Technician
 $router->get('/technician', 'TechnicianController', 'index');
