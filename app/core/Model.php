@@ -25,10 +25,10 @@ class Model
         return $this->db->result();
     }
 
-    public function delete(string $table, int $id): void
+    public function delete(string $table, int $id): bool
     {
         $this->db->query("DELETE FROM {$table} WHERE id=:id");
         $this->db->bind(':id', $id);
-        $this->db->execute();
+       return  $this->db->execute();
     }
 }
