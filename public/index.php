@@ -1,2 +1,3 @@
 <?php
-echo "ReparaYa MVC funcionando";
+include '../app/views/client/dashboard.php';
+?>
