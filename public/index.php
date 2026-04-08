@@ -8,8 +8,8 @@ require_once __DIR__ . '/../config/Config.php';
 
 // Cargar las clases del core
 require_once __DIR__ . '/../app/core/Database.php';
-require_once __DIR__ . '/../app/core/Role.php';
 require_once __DIR__ . '/../app/core/Auth.php';
+require_once __DIR__ . '/../app/core/Helpers.php';
 require_once __DIR__ . '/../app/core/Router.php';
 
 // -------- RUTAS -----------
