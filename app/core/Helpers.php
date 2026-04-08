@@ -2,7 +2,7 @@
 
 enum Role: string {
     case Admin = 'admin';
-    case Technician = 'técnico';
+    case Technician = 'tecnico';
     case Client = 'particular';
 }
 
