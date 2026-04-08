@@ -7,6 +7,9 @@
 <body>
     <h1>Crear nueva incidencia</h1>
 
+    <p><strong>Importante:</strong> los servicios estándar deben solicitarse con al menos 48 horas de antelación.</p>
+    <p>Los servicios urgentes tendrán prioridad en la asignación.</p>
+
     <form>
         <label>Fecha solicitada:</label><br>
         <input type="date"><br><br>
