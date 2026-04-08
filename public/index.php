@@ -1,4 +1,5 @@
 <?php
+include '../app/views/client/dashboard.php';
 
 session_start();
 
