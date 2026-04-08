@@ -2,17 +2,16 @@
 
 require_once __DIR__ . '/../models/User.php';
 require_once __DIR__ . '/../core/Auth.php';
+require_once __DIR__ . '/../core/Helpers.php';
 require_once __DIR__ . '/../core/Validator.php';
 
 class AuthController
 {
     private User $userModel;
-    private Validator $validator;
 
     public function __construct()
     {
         $this->userModel = new User();
-        $this->validator = new Validator();
     }
 
 
@@ -43,12 +42,13 @@ class AuthController
         $email = trim($_POST['email'] ?? '');
         $password = trim($_POST['password'] ?? '');
         
-        $this->validator->required($email, 'email')
+        $validator = new Validator();
+        $validator->required($email, 'email')
                         ->email($email)
                         ->required($password, 'contraseña');
 
-        if ($this->validator->fails()) {
-            $errors = $this->validator->getErrors();
+        if ($validator->fails()) {
+            $errors = $validator->getErrors();
             require_once __DIR__ . '/../views/auth/login.php';
             return;
         }       
@@ -92,7 +92,8 @@ class AuthController
         $confirm = trim($_POST['confirm_password'] ?? '');
         $phone = trim($_POST['telefono'] ?? '');
         
-        $this->validator->required($name, 'nombre')
+        $validator = new Validator();
+        $validator->required($name, 'nombre')
                         ->required($email, 'email')
                         ->email($email)
                         ->unique((bool)$this->userModel->getUserByEmail($email), 'email')
@@ -100,9 +101,9 @@ class AuthController
                         ->minLength($password, 8, 'contraseña')
                         ->matches($password, $confirm, 'contraseña');
         
-        if ($this->validator->fails()) {
-            $errors = $this->validator->getErrors();
-            require_once __DIR__ . '/../views/auth/login.php';
+        if ($validator->fails()) {
+            $errors = $validator->getErrors();
+            require_once __DIR__ . '/../views/auth/register.php';
             return;
         }
 
