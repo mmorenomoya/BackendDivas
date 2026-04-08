@@ -7,6 +7,8 @@
 <body>
     <h1>Mis avisos</h1>
 
+    <p><strong>Nota:</strong> las incidencias estándar no podrán cancelarse si faltan menos de 48 horas para la cita.</p>
+
     <table border="1" cellpadding="8">
         <tr>
             <th>Código</th>
