@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS bbddReparaYa;
+USE bbddReparaYa;
+
 -- 1. TABLA DE USUARIOS (Para el Alumno de Gestión de Usuarios)
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
