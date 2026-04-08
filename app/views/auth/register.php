@@ -24,7 +24,7 @@
         <input type="text" id="nombre" name="nombre" value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>"><br><br>
 
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" value="<?= htmlspecialchars($_POST['email']) ?? '' ?>"><br><br>
+        <input type="email" id="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"><br><br>
 
         <label for="password">Contraseña:</label><br>
         <input type="password" id="password" name="password"><br><br>
@@ -33,7 +33,7 @@
         <input type="password" id="confirm_password" name="confirm_password"><br><br>
         
         <label for="telefono">Teléfono:</label><br>
-        <input type="text" id="telefono" name="telefono" value="<?= htmlspecialchars($_POST['telefono']) ?? '' ?>"><br><br>
+        <input type="text" id="telefono" name="telefono" value="<?= htmlspecialchars($_POST['telefono'] ?? '') ?>"><br><br>
 
         <button type="submit">Registrarse</button>
     </form>
