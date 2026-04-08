@@ -31,6 +31,7 @@ class Router {
         foreach($this->routes as $route) {
             if ($route['url'] == $url && $route['method'] === $method) {
                 $this->load($route['controller'], $route['action']);
+                return;
             }
         }
 
@@ -40,7 +41,7 @@ class Router {
 
     public function load(string $controller, string $action): void
     {
-        $file = __DIR__ . '/../controllers' . $controller . '.php';
+        $file = __DIR__ . '/../controllers/' . $controller . '.php';
 
         if (file_exists($file)) {
             require_once $file;
