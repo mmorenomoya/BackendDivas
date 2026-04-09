@@ -10,7 +10,7 @@ class User extends Model
 {
     public function __construct()
     {
-        return parent::__construct();
+        parent::__construct();
     }
 
     public function getAllUsers(): array
@@ -27,19 +27,24 @@ class User extends Model
     {
         $this->db->query("SELECT * FROM usuarios WHERE email = :email");
         $this->db->bind(':email', $email);
-        return $this->db->results();
+        $this->db->execute();
+        return $this->db->result();
     }
 
     public function addUser(string $name, string $mail, string $pass, Role $role, string $phone): bool 
     {
-        $this->db->query("INSERT INTO usuarios (nombre, email, password, rol, telefono) VALUES (:name, :mail, :pass, :role, :phone)");
-        $this->db->bind(':name', $name);
-        $this->db->bind(':mail', $mail);
-        $this->db->bind(':pass', password_hash($pass, PASSWORD_BCRYPT));
-        $this->db->bind(':role', $role->value);
-        $this->db->bind(':phone', $phone);
-        return $this->db->execute();
-
+        try {
+            $this->db->query("INSERT INTO usuarios (nombre, email, password, rol, telefono) VALUES (:name, :mail, :pass, :role, :phone)");
+            $this->db->bind(':name', $name);
+            $this->db->bind(':mail', $mail);
+            $this->db->bind(':pass', password_hash($pass, PASSWORD_BCRYPT));
+            $this->db->bind(':role', $role->value);
+            $this->db->bind(':phone', $phone);
+            return $this->db->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+       
     }
 
     public function updateUser(int $id, string $name, string $mail, string $phone): bool
