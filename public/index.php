@@ -1,13 +1,15 @@
 <?php
-include '../app/views/client/dashboard.php';
 
+// Inicio de sesión. Tiene que ir primero siempre.
 session_start();
 
+// Cargar la configuración.
 require_once __DIR__ . '/../config/Config.php';
 
+// Cargar las clases del core
 require_once __DIR__ . '/../app/core/Database.php';
-require_once __DIR__ . '/../app/core/Role.php';
 require_once __DIR__ . '/../app/core/Auth.php';
+require_once __DIR__ . '/../app/core/Helpers.php';
 require_once __DIR__ . '/../app/core/Router.php';
 
 // -------- RUTAS -----------
@@ -20,6 +22,13 @@ $router->post('/login', 'AuthController', 'login');
 $router->get('/register', 'AuthController', 'registerForm');
 $router->post('/register', 'AuthController', 'register');
 $router->get('/logout', 'AuthController', 'logout');
+$router->get('/admin/register', 'AuthController', 'registerAdminForm');
+$router->post('/admin/register', 'AuthController', 'registerAdmin');
+
+// Profile
+$router->get('/profile', 'ProfileController', 'index');
+$router->post('/profile', 'ProfileController', 'update');
+$router->post('/profile/password', 'ProfileController', 'updatePassword');
 
 // Admin
 $router->get('/admin', 'AdminController', 'index');

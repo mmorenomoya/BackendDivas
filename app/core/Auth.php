@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/Role.php';
+require_once __DIR__ . '/Helpers.php';
 
 class Auth
 {
