@@ -18,7 +18,7 @@ class AuthController
     // GET
     public function index(): void
     {
-        if(Auth::isLoggedIn()) {
+        if (Auth::isLoggedIn()) {
             $this->redirectByRole();
         } else {
             header('Location: ' . BASE_URL . '/login');
@@ -44,8 +44,8 @@ class AuthController
         
         $validator = new Validator();
         $validator->required($email, 'email')
-                        ->email($email)
-                        ->required($password, 'contraseña');
+                    ->email($email)
+                    ->required($password, 'contraseña');
 
         if ($validator->fails()) {
             $errors = $validator->getErrors();
@@ -91,12 +91,14 @@ class AuthController
         $password = trim($_POST['password'] ?? '');
         $confirm = trim($_POST['confirm_password'] ?? '');
         $phone = trim($_POST['telefono'] ?? '');
+
+        $exists = $this->userModel->getUserByEmail($email);
         
         $validator = new Validator();
         $validator->required($name, 'nombre')
                         ->required($email, 'email')
                         ->email($email)
-                        ->unique((bool)$this->userModel->getUserByEmail($email), 'email')
+                        ->unique($exists !== false, 'email')
                         ->required($password, 'contraseña')
                         ->minLength($password, 8, 'contraseña')
                         ->matches($password, $confirm, 'contraseña');
@@ -107,11 +109,74 @@ class AuthController
             return;
         }
 
-        $this->userModel->addUser($name, $email, $password, Role::Client, $phone);
+        $result = $this->userModel->addUser($name, $email, $password, Role::Client, $phone);
+
+        if (!$result) {
+            $errors = ['El email ya está registrado'];
+            require_once __DIR__ . '/../views/auth/register.php';
+            return;
+        }
+
 
         $_SESSION['success'] = 'Cuenta creada correctamente. Ya puedes iniciar sesión.';
         header('Location: ' . BASE_URL . '/login');
         exit;    
+    }
+
+    // GET /admin/register
+    // TODO: 1) terminar el flujo de registro y login del rol admin. 2) añadir rol para el registro de tecnicos (pending_technician)
+    public function registerAdminForm(): void
+    {
+        if(!Auth::isLoggedIn() || Auth::getRole() !== Role::Admin->value) {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+
+        require_once __DIR__ . '/../views/admin/register.php';
+    }
+
+    // POST /admin/register
+    public function registerAdmin(): void
+    {
+        if (!Auth::isLoggedIn() || Auth::getRole() !== Role::Admin->value) {
+            header('Location: ' . BASE_URL . '/login');
+            exit;
+        }
+
+        $name = trim($_POST['nombre'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+        $confirm = trim($_POST['confirm_password'] ?? '');
+
+        $exists = $this->userModel->getUserByEmail($email);
+        
+        $validator = new Validator();
+        $validator->required($name, 'nombre')
+                ->required($email, 'email')
+                ->email($email)
+                ->unique($exists !== false, 'email')
+                ->required($password, 'contraseña')
+                ->minLength($password, 8, 'contraseña')
+                ->matches($password, $confirm, 'contraseña');
+
+        if ($validator->fails()) {
+            $errors = $validator->getErrors();
+            require_once __DIR__ . '/../views/auth/register.php';
+            return;
+        }
+
+         $result = $this->userModel->addUser($name, $email, $password, Role::Admin, $phone);
+
+        if (!$result) {
+            $errors = ['El email ya está registrado'];
+            require_once __DIR__ . '/../views/admin/register.php';
+            return;
+        }
+
+
+        $_SESSION['success'] = 'Administrador creado correctamente.';
+        header('Location: ' . BASE_URL . '/admin');
+        exit; 
     }
 
     private function redirectByRole(): void

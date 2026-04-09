@@ -4,7 +4,7 @@ require_once __DIR__ . '/Database.php';
 
 class Model 
 {
-    private $db;
+    protected $db;
 
     public function __construct()
     {
