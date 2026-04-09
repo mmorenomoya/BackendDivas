@@ -22,6 +22,8 @@ $router->post('/login', 'AuthController', 'login');
 $router->get('/register', 'AuthController', 'registerForm');
 $router->post('/register', 'AuthController', 'register');
 $router->get('/logout', 'AuthController', 'logout');
+$router->get('/admin/register', 'AuthController', 'registerAdminForm');
+$router->post('/admin/register', 'AuthController', 'registerAdmin');
 
 // Profile
 $router->get('/profile', 'ProfileController', 'index');
