@@ -22,7 +22,7 @@ class AdminController
 
     public function index(): void //Muestra el panel principal de administración con el listado de incidencias
     {
-        $incidencias = $this->incidentModel->getAllIncidents();
+        $incidencias = $this->incidentModel->getAllIncidentsWithDetails();
         require_once __DIR__ . '/../views/admin/index.php';
     }
 
@@ -43,7 +43,7 @@ class AdminController
         exit;
     }
 
-    public function assignForm(): void //Guarda la asignación de un técnico y actualiza el estado de la incidencia
+    public function assignForm(): void //Muestra el formulario para asignar un técnico a una incidencia
     {
         $incidentId = $_GET['id'] ?? null;
 
@@ -86,20 +86,20 @@ class AdminController
         $fechaServicio = $_POST['fecha_servicio'] ?? '';
         $tipoUrgencia = $_POST['tipo_urgencia'] ?? 'Estándar';
 
-        $localizador = $this->incidentModel->generateLocalizador();
+        $data = [
+            'localizador' => $this->incidentModel->generateLocalizador(),
+            'cliente_id' => $clienteId,
+            'especialidad_id' => $especialidadId,
+            'descripcion' => $descripcion,
+            'direccion' => $direccion,
+            'fecha_servicio' => $fechaServicio,
+            'tipo_urgencia' => $tipoUrgencia
+        ];
 
-        $this->incidentModel->createIncident(
-            $localizador,
-            $clienteId,
-            $especialidadId,
-            $descripcion,
-            $direccion,
-            $fechaServicio,
-            $tipoUrgencia
-        );
+        $this->incidentModel->createIncident($data);
 
-        header('Location: ' . BASE_URL . '/admin');
-        exit;
+            header('Location: ' . BASE_URL . '/admin');
+            exit;
     }
 
     public function editForm(): void //Muestra el formulario para editar una incidencia existente
@@ -111,7 +111,7 @@ class AdminController
             exit;
         }
 
-        $incidencia = $this->incidentModel->getIncidentById($id);
+        $incidencia = $this->incidentModel->getIncidentByIdForAdmin($id);
         $clientes = $this->userModel->getAllClients();
         $especialidades = $this->serviceTypeModel->getAllServiceTypes();
 
@@ -121,23 +121,23 @@ class AdminController
     public function update(): void //Actualiza los datos de una incidencia
     {
         $id = (int)($_POST['id'] ?? 0);
-        $clienteId = (int)($_POST['cliente_id'] ?? 0);
+        //$clienteId = (int)($_POST['cliente_id'] ?? 0);
         $especialidadId = (int)($_POST['especialidad_id'] ?? 0);
         $descripcion = trim($_POST['descripcion'] ?? '');
         $direccion = trim($_POST['direccion'] ?? '');
         $fechaServicio = $_POST['fecha_servicio'] ?? '';
         $tipoUrgencia = $_POST['tipo_urgencia'] ?? 'Estándar';
 
+        $data = [
+            'especialidad_id' => $especialidadId,
+            'descripcion' => $descripcion,
+            'direccion' => $direccion,
+            'fecha_servicio' => $fechaServicio,
+            'tipo_urgencia' => $tipoUrgencia
+        ];
+
         if ($id) {
-            $this->incidentModel->updateIncident(
-                $id,
-                $clienteId,
-                $especialidadId,
-                $descripcion,
-                $direccion,
-                $fechaServicio,
-                $tipoUrgencia
-            );
+            $this->incidentModel->updateIncident($id, $data);
         }
 
         header('Location: ' . BASE_URL . '/admin');

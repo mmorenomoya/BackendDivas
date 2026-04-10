@@ -89,7 +89,7 @@ class Incident extends Model
         $year = date('Y');
         do {
             $random = strtoupper(substr(md5(uniqid()), 0, 4));
-            $localizador = "REP-{$year}-{$random}";
+            $localizador = "RP-{$year}-{$random}";
             $this->db->query("SELECT id FROM incidencias WHERE localizador = :localizador");
             $this->db->bind(':localizador', $localizador);
             $exists = $this->db->result();
@@ -106,5 +106,80 @@ class Incident extends Model
         $hoursLeft = ($diff->days * 24) + $diff->h;
 
         return $hoursLeft < 48;
+    }
+
+    // Obtiene todas las incidencias con información de cliente, técnico y especialidad para el panel admin
+    public function getAllIncidentsWithDetails(): array
+    {
+        $this->db->query("
+            SELECT 
+                i.id,
+                i.localizador,
+                i.descripcion,
+                i.direccion,
+                i.fecha_servicio,
+                i.tipo_urgencia,
+                i.estado,
+                u.nombre AS cliente_nombre,
+                t.nombre_completo AS tecnico_nombre,
+                e.nombre_especialidad
+            FROM incidencias i
+            INNER JOIN usuarios u ON i.cliente_id = u.id
+            LEFT JOIN tecnicos t ON i.tecnico_id = t.id
+            INNER JOIN especialidades e ON i.especialidad_id = e.id
+            ORDER BY i.fecha_servicio ASC
+        ");
+
+        $this->db->execute();
+        return $this->db->results();
+    }
+
+    // Asigna un técnico a una incidencia y actualiza su estado
+    public function assignTechnician(int $incidentId, int $technicianId): bool
+    {
+        $this->db->query("
+            UPDATE incidencias
+            SET tecnico_id = :technician_id, estado = 'Asignada'
+            WHERE id = :incident_id
+        ");
+        $this->db->bind(':technician_id', $technicianId);
+        $this->db->bind(':incident_id', $incidentId);
+        return $this->db->execute();
+    }
+
+    // Obtiene las incidencias en formato de eventos para el calendario
+    public function getCalendarEvents(): array
+    {
+        $this->db->query("
+            SELECT 
+                i.id,
+                i.localizador,
+                i.descripcion,
+                i.fecha_servicio,
+                i.tipo_urgencia,
+                i.estado,
+                u.nombre AS cliente_nombre,
+                t.nombre_completo AS tecnico_nombre
+            FROM incidencias i
+            INNER JOIN usuarios u ON i.cliente_id = u.id
+            LEFT JOIN tecnicos t ON i.tecnico_id = t.id
+            ORDER BY i.fecha_servicio ASC
+        ");
+
+        $this->db->execute();
+        return $this->db->results();
+    }
+
+    // Obtiene una incidencia concreta para la edición desde el panel de administración
+    public function getIncidentByIdForAdmin(int $id): array | false
+    {
+        $this->db->query("
+            SELECT *
+            FROM incidencias
+            WHERE id = :id
+        ");
+        $this->db->bind(':id', $id);
+        $this->db->execute();
+        return $this->db->result();
     }
 }
