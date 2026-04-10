@@ -69,6 +69,13 @@ class User extends Model
     {
         return $this->delete('usuarios', $id);
     }
+
+    public function getAllClients(): array // Obtiene todos los usuarios con rol de cliente particular
+    {
+        $this->db->query("SELECT id, nombre FROM usuarios WHERE rol = 'particular' ORDER BY nombre ASC");
+        $this->db->execute();
+        return $this->db->results();
+    }
 }
 
 ?>
