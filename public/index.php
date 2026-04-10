@@ -44,6 +44,9 @@ $router->post('/admin/assign', 'AdminController', 'assign');
 
 // Client
 $router->get('/client', 'ClientController', 'index');
+$router->get('/client/create', 'ClientController', 'create');
+$router->get('/client/incidents', 'ClientController', 'incidents');
+$router->get('/client/detail', 'ClientController', 'detail');
 
 //Technician
 $router->get('/technician', 'TechnicianController', 'index');
