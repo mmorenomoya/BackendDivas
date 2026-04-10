@@ -24,6 +24,11 @@ $router->post('/register', 'AuthController', 'register');
 $router->get('/logout', 'AuthController', 'logout');
 $router->get('/admin/register', 'AuthController', 'registerAdminForm');
 $router->post('/admin/register', 'AuthController', 'registerAdmin');
+$router->get('/admin/create', 'AdminController', 'createForm');
+$router->post('/admin/create', 'AdminController', 'store');
+$router->get('/admin/edit', 'AdminController', 'editForm');
+$router->post('/admin/edit', 'AdminController', 'update');
+$router->get('/admin/calendar', 'AdminController', 'calendar');
 
 // Profile
 $router->get('/profile', 'ProfileController', 'index');
@@ -33,6 +38,9 @@ $router->post('/profile/password', 'ProfileController', 'updatePassword');
 // Admin
 $router->get('/admin', 'AdminController', 'index');
 $router->get('/admin/users', 'AdminController', 'users');
+$router->get('/admin/cancel', 'AdminController', 'cancel');
+$router->get('/admin/assign', 'AdminController', 'assignForm');
+$router->post('/admin/assign', 'AdminController', 'assign');
 
 // Client
 $router->get('/client', 'ClientController', 'index');
