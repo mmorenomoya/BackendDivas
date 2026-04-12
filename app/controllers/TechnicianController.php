@@ -3,20 +3,25 @@
 require_once __DIR__ . '/../models/Technician.php';
 require_once __DIR__ . '/../models/ServiceType.php';
 require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/Incident.php';
+require_once __DIR__ . '/../core/Auth.php';
 
 class TechnicianController
 {
     private Technician $technicianModel;
     private ServiceType $serviceTypeModel;
     private User $userModel;
+    private Incident $incidentModel;
 
     public function __construct()
     {
         $this->technicianModel = new Technician();
         $this->serviceTypeModel = new ServiceType();
         $this->userModel = new User();
+        $this->incidentModel = new Incident();
     }
 
+    // Panel admin: gestión de técnicos
     public function index(): void
     {
         $technicians = $this->technicianModel->getAllTechnicians();
@@ -70,5 +75,28 @@ class TechnicianController
 
         header('Location: ' . BASE_URL . 'admin/technicians');
         exit;
+    }
+
+    // Panel técnico: solo lectura de agenda
+    public function dashboard(): void
+    {
+        Auth::requireLogin();
+
+        if (Auth::getRole() !== 'tecnico') {
+            header('Location: ' . BASE_URL);
+            exit;
+        }
+
+        $user = Auth::getUser();
+        $technician = $this->technicianModel->getTechnicianByUserId((int) $user['id']);
+        $incidents = [];
+
+        if (!$technician) {
+            $_SESSION['error'] = 'No tienes un perfil de técnico vinculado.';
+        } else {
+            $incidents = $this->incidentModel->getIncidentsByTechnicianId((int) $technician['id']);
+        }
+
+        require_once __DIR__ . '/../views/technician/dashboard.php';
     }
 }

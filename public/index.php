@@ -51,9 +51,12 @@ $router->get('/client/create', 'ClientController', 'create');
 $router->get('/client/incidents', 'ClientController', 'incidents');
 $router->get('/client/detail', 'ClientController', 'detail');
 
-//Technician
+//Technician admin
 $router->get('/admin/technicians', 'TechnicianController', 'index');
 $router->post('/admin/technicians/create', 'TechnicianController', 'store');
 $router->get('/admin/technicians/delete', 'TechnicianController', 'delete');
+
+// Technician panel
+$router->get('/technician', 'TechnicianController', 'dashboard');
 
 $router->dispatch();

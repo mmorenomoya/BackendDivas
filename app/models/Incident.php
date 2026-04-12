@@ -182,4 +182,29 @@ class Incident extends Model
         $this->db->execute();
         return $this->db->result();
     }
+
+    public function getIncidentsByTechnicianId(int $technicianId): array
+{
+    $this->db->query("
+        SELECT
+            i.id,
+            i.localizador,
+            i.descripcion,
+            i.direccion,
+            i.fecha_servicio,
+            i.tipo_urgencia,
+            i.estado,
+            e.nombre_especialidad,
+            u.nombre AS cliente_nombre
+        FROM incidencias i
+        INNER JOIN usuarios u ON i.cliente_id = u.id
+        INNER JOIN especialidades e ON i.especialidad_id = e.id
+        WHERE i.tecnico_id = :technician_id
+        ORDER BY i.fecha_servicio ASC
+    ");
+    $this->db->bind(':technician_id', $technicianId);
+    $this->db->execute();
+    return $this->db->results();
+}
+
 }
