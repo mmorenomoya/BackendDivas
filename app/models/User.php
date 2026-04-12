@@ -76,6 +76,14 @@ class User extends Model
         $this->db->execute();
         return $this->db->results();
     }
+
+    public function getAllTechnicianUsers(): array
+{
+    $this->db->query("SELECT id, nombre, email FROM usuarios WHERE rol = 'tecnico' ORDER BY nombre ASC");
+    $this->db->execute();
+    return $this->db->results();
+}
+
 }
 
 ?>

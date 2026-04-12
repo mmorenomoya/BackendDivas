@@ -41,6 +41,9 @@ $router->get('/admin/users', 'AdminController', 'users');
 $router->get('/admin/cancel', 'AdminController', 'cancel');
 $router->get('/admin/assign', 'AdminController', 'assignForm');
 $router->post('/admin/assign', 'AdminController', 'assign');
+$router->get('/admin/services', 'ServiceController', 'index');
+$router->get('/admin/services/create', 'ServiceController', 'createForm');
+$router->post('/admin/services/create', 'ServiceController', 'store');
 
 // Client
 $router->get('/client', 'ClientController', 'index');
@@ -49,6 +52,8 @@ $router->get('/client/incidents', 'ClientController', 'incidents');
 $router->get('/client/detail', 'ClientController', 'detail');
 
 //Technician
-$router->get('/technician', 'TechnicianController', 'index');
+$router->get('/admin/technicians', 'TechnicianController', 'index');
+$router->post('/admin/technicians/create', 'TechnicianController', 'store');
+$router->get('/admin/technicians/delete', 'TechnicianController', 'delete');
 
 $router->dispatch();

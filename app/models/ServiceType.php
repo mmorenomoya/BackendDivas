@@ -21,4 +21,11 @@ class ServiceType extends Model
     {
         return $this->getById('especialidades', $id);
     }
+
+    public function createServiceType(string $name): bool
+    {
+        $this->db->query("INSERT INTO especialidades (nombre_especialidad) VALUES (:name)");
+        $this->db->bind(':name', $name);
+        return $this->db->execute();
+    }
 }
