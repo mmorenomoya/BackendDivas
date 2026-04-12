@@ -1,0 +1,89 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* ---- Contenidor ---- */
+.auth-wrapper {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* ---- Capçalera ---- */
+.auth-header {
+    margin-bottom: 2rem;
+}
+
+.auth-logo {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--color-accent);
+    letter-spacing: -0.02em;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.auth-header h1 {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.auth-header p {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-top: 0.25rem;
+}
+
+/* ---- Targeta ---- */
+.auth-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ---- Botó a tota l'amplada ---- */
+.auth-card .btn-primary {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.required {
+    color: var(--color-error);
+    font-size: 0.75rem;
+}
+
+.optional {
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* ---- Peu ---- */
+.auth-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+}
+
+/* ---- Divisor ---- */
+.auth-divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 1.5rem 0;
+}

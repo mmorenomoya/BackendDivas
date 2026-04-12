@@ -1,0 +1,88 @@
+body {
+  padding: 2rem;
+}
+
+/* ---- Contenedor ---- */
+.profile-wrapper {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ---- Cabecera ---- */
+.profile-header {
+  margin-bottom: 2rem;
+}
+
+.profile-header h1 {
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.profile-header p {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin-top: 0.2rem;
+}
+
+/* ---- Contenido ---- */
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ---- Tarjetas ---- */
+.profile-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+
+.profile-card h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 1.5rem;
+}
+
+/* ---- Grid de campos ---- */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.profile-card .form-group {
+  margin-bottom: 1rem;
+}
+
+.profile-card .form-group:last-of-type {
+  margin-bottom: 1.5rem;
+}
+
+/* ---- Botón ---- */
+.profile-card .btn-primary {
+  width: auto;
+  padding: 0.7rem 1.5rem;
+}
+
+/* ---- Pie — cerrar sesión ---- */
+.profile-footer {
+  text-align: right;
+}
+
+.profile-footer a {
+  font-size: 0.875rem;
+  color: var(--color-error);
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+
+.profile-footer a:hover {
+  opacity: 0.75;
+  text-decoration: none;
+}
