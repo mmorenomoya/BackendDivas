@@ -1,7 +1,14 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <div class="container">
+    <p>
+        <a href="<?= BASE_URL ?>admin">← Volver al panel admin</a> |
+        <a href="<?= BASE_URL ?>admin/services">Servicios</a> |
+        <a href="<?= BASE_URL ?>admin/calendar">Calendario</a>
+    </p>
+
     <h1>Gestión de técnicos</h1>
+    <p>Panel de administración</p>
 
     <?php if (!empty($_SESSION['error'])): ?>
         <div style="color:red; margin-bottom: 10px;">
@@ -72,7 +79,7 @@
                         <td><?= htmlspecialchars($technician['nombre_completo']) ?></td>
                         <td><?= htmlspecialchars($technician['nombre_especialidad'] ?? 'Sin especialidad') ?></td>
                         <td><?= htmlspecialchars($technician['email'] ?? 'Sin usuario') ?></td>
-                        <td><?= $technician['disponible'] ? 'Activo' : 'Baja' ?></td>
+                        <td><?= (int)$technician['disponible'] === 1 ? 'Activo' : 'Baja' ?></td>
                         <td>
                             <?php if ((int)$technician['disponible'] === 1): ?>
                                 <a href="<?= BASE_URL ?>admin/technicians/delete?id=<?= $technician['id'] ?>"
