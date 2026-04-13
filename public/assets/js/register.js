@@ -3,7 +3,7 @@ const nombre   = document.getElementById('nombre');
 const email    = document.getElementById('email');
 const password = document.getElementById('password');
 const confirm  = document.getElementById('confirm_password');
-const btn      = document.querySelector('.btn-primary');
+const btn      = document.getElementById('register-btn');
 
 // ---- Mostrar/esconder contraseña ----
 function addToggle(input) {

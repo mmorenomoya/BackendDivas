@@ -9,6 +9,8 @@
     <title>Registro - ReparaYA</title>
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/global.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/auth.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/header.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/footer.css">
 </head>
 <body>
 
@@ -69,7 +71,7 @@
                         </div>
                     </div>   
             
-                    <button type="submit" class="btn-primary">Registrarse</button>
+                    <button type="submit" class="btn-primary" id="register-btn">Registrarse</button>
     
                 </form>
             </div>
