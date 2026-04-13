@@ -48,6 +48,7 @@ $router->post('/admin/services/create', 'ServiceController', 'store');
 // Client
 $router->get('/client', 'ClientController', 'index');
 $router->get('/client/create', 'ClientController', 'create');
+$router->post('/client/create', 'ClientController', 'store');
 $router->get('/client/incidents', 'ClientController', 'incidents');
 $router->get('/client/detail', 'ClientController', 'detail');
 
