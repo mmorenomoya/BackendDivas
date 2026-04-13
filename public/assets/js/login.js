@@ -1,6 +1,6 @@
 const email    = document.getElementById('email');
 const password = document.getElementById('password');
-const btn      = document.querySelector('.btn-primary');
+const btn      = document.getElementById('login-btn');
 const form     = document.querySelector('form');
 
 // ---- Mostrar/esconder contraseña ----

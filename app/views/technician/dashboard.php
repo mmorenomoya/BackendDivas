@@ -2,6 +2,7 @@
 
 <div class="container">
     <h1>Panel técnico</h1>
+    <p>Consulta en solo lectura de la agenda de trabajo y de las incidencias asignadas.</p>
 
     <?php if (!empty($_SESSION['error'])): ?>
         <div style="color:red; margin-bottom: 10px;">
@@ -13,10 +14,10 @@
         <p><strong>Técnico:</strong> <?= htmlspecialchars($technician['nombre_completo']) ?></p>
     <?php endif; ?>
 
-    <h2>Agenda de trabajo</h2>
+    <h2>Mi agenda</h2>
 
     <?php if (!empty($incidents)): ?>
-        <table border="1" cellpadding="8" cellspacing="0">
+        <table border="1" cellpadding="8" cellspacing="0" style="width: 100%; max-width: 1100px;">
             <thead>
                 <tr>
                     <th>Localizador</th>
@@ -45,7 +46,7 @@
             </tbody>
         </table>
     <?php else: ?>
-        <p>No tienes incidencias asignadas.</p>
+        <p>No tienes incidencias asignadas en este momento.</p>
     <?php endif; ?>
 </div>
 

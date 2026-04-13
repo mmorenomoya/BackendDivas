@@ -1,5 +1,6 @@
-    <footer>
-        <p>Proyecto ReparaYa - Backend Divas</p>
-    </footer>
-</body>
-</html>
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <span>© 2026 ReparaYA - Backend Divas</span>
+        <span>Gestión de reparaciones domésticas</span>
+    </div>
+</footer>

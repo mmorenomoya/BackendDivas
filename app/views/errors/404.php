@@ -7,13 +7,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Página no encontrada - ReparaYA</title>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/global.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/errors.css">
 </head>
 <body>
     
-    <h1>404</h1>
-    <h2>Página no encontrada</h2>
-    <p>La página que buscas no existe o ha sido movida.</p>
+    <div class="error-wrapper">
+        <p class="error-code">404</p>    
+        <h1>Página no encontrada</h1>
+        <p>La página que buscas no existe o ha sido movida.</p>
+        <a href="<?= BASE_URL ?>/" class="btn-primary">Volver al inicio</a>        
+    </div>
 
-    <a href="<?= BASE_URL ?>/">Volver al inicio</a>
 </body>
 </html>

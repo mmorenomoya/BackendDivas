@@ -34,6 +34,19 @@ class Incident extends Model
         return $this->db->results();
     }
 
+    public function getIncidentByIdAndClientId(int $incidentId, int $clientId): array | false
+    {
+        $this->db->query("
+            SELECT *
+            FROM incidencias
+            WHERE id = :id AND cliente_id = :cliente_id
+        ");
+        $this->db->bind(':id', $incidentId);
+        $this->db->bind(':cliente_id', $clientId);
+        $this->db->execute();
+        return $this->db->result();
+    }
+
     public function createIncident(array $data): bool
     {
         $this->db->query("INSERT INTO incidencias
@@ -77,6 +90,19 @@ class Incident extends Model
         $this->db->query("UPDATE incidencias SET estado = 'Cancelada' WHERE id = :id");
         $this->db->bind(':id', $id);
         return $this->db->execute();
+    }
+
+    public function canBeCancelledByClient(array $incident): bool
+    {
+        if (($incident['tipo_urgencia'] ?? '') !== 'Estándar') {
+            return false;
+        }
+
+        if (($incident['estado'] ?? '') === 'Cancelada') {
+            return false;
+        }
+
+        return !$this->isWithin48Hours($incident['fecha_servicio']);
     }
 
     public function deleteIncident(int $id): bool
@@ -184,27 +210,26 @@ class Incident extends Model
     }
 
     public function getIncidentsByTechnicianId(int $technicianId): array
-{
-    $this->db->query("
-        SELECT
-            i.id,
-            i.localizador,
-            i.descripcion,
-            i.direccion,
-            i.fecha_servicio,
-            i.tipo_urgencia,
-            i.estado,
-            e.nombre_especialidad,
-            u.nombre AS cliente_nombre
-        FROM incidencias i
-        INNER JOIN usuarios u ON i.cliente_id = u.id
-        INNER JOIN especialidades e ON i.especialidad_id = e.id
-        WHERE i.tecnico_id = :technician_id
-        ORDER BY i.fecha_servicio ASC
-    ");
-    $this->db->bind(':technician_id', $technicianId);
-    $this->db->execute();
-    return $this->db->results();
-}
-
+    {
+        $this->db->query("
+            SELECT
+                i.id,
+                i.localizador,
+                i.descripcion,
+                i.direccion,
+                i.fecha_servicio,
+                i.tipo_urgencia,
+                i.estado,
+                e.nombre_especialidad,
+                u.nombre AS cliente_nombre
+            FROM incidencias i
+            INNER JOIN usuarios u ON i.cliente_id = u.id
+            INNER JOIN especialidades e ON i.especialidad_id = e.id
+            WHERE i.tecnico_id = :technician_id
+            ORDER BY i.fecha_servicio ASC
+        ");
+        $this->db->bind(':technician_id', $technicianId);
+        $this->db->execute();
+        return $this->db->results();
+    }
 }
