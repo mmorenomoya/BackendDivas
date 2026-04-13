@@ -50,6 +50,7 @@ $router->get('/client', 'ClientController', 'index');
 $router->get('/client/create', 'ClientController', 'create');
 $router->post('/client/create', 'ClientController', 'store');
 $router->get('/client/incidents', 'ClientController', 'incidents');
+$router->get('/client/cancel', 'ClientController', 'cancel');
 $router->get('/client/detail', 'ClientController', 'detail');
 
 //Technician admin

@@ -106,6 +106,41 @@ class ClientController
         require_once __DIR__ . '/../views/client/incidents.php';
     }
 
+    public function cancel()
+    {
+        Auth::requireLogin();
+
+        $usuario = Auth::getUser();
+        $clientId = $usuario['id'] ?? null;
+        $incidentId = (int)($_GET['id'] ?? 0);
+
+        if (!$clientId || $incidentId <= 0) {
+            header('Location: ' . BASE_URL . '/client/incidents');
+            exit;
+        }
+
+        $incidentModel = new Incident();
+        $incident = $incidentModel->getIncidentByIdAndClientId($incidentId, (int)$clientId);
+
+        if (!$incident) {
+            $_SESSION['error'] = 'La incidencia no existe o no te pertenece.';
+            header('Location: ' . BASE_URL . '/client/incidents');
+            exit;
+        }
+
+        if (!$incidentModel->canBeCancelledByClient($incident)) {
+            $_SESSION['error'] = 'No puedes cancelar esta incidencia porque faltan menos de 48 horas para la cita o no es estándar.';
+            header('Location: ' . BASE_URL . '/client/incidents');
+            exit;
+        }
+
+        $incidentModel->cancelIncident($incidentId);
+
+        $_SESSION['success'] = 'Incidencia cancelada correctamente.';
+        header('Location: ' . BASE_URL . '/client/incidents');
+        exit;
+    }
+
     public function detail()
     {
         require_once __DIR__ . '/../views/client/incident_detail.php';
