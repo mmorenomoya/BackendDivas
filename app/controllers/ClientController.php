@@ -8,6 +8,11 @@ class ClientController
 {
     public function index()
     {
+        Auth::requireLogin(Role::Client);
+
+        $incidentModel = new Incident();
+        $incidencias = $incidentModel->getIncidentByClientId(Auth::getUser()['id']);
+        
         require_once __DIR__ . '/../views/client/dashboard.php';
     }
 
