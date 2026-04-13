@@ -1,7 +1,12 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <div class="container">
+    <p>
+        <a href="<?= BASE_URL ?>admin">← Volver al panel admin</a>
+    </p>
+
     <h1>Gestión de servicios</h1>
+    <p>Panel de administración</p>
 
     <?php if (!empty($_SESSION['error'])): ?>
         <div style="color:red; margin-bottom: 10px;">
