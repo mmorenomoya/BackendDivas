@@ -53,7 +53,7 @@ class ProfileController
 
         $_SESSION['usuario']['nombre'] = $name;
         $_SESSION['usuario']['email'] = $email;
-        $_SESSION['usuario']['telefono'] = $telefono;
+        $_SESSION['usuario']['telefono'] = $phone;
 
         $_SESSION['success'] = 'Perfil actualizado correctamente.';
         header('Location: ' . BASE_URL . '/profile');
